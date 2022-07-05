@@ -20,7 +20,7 @@ contract CryptoAlien is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
 
     constructor() ERC721("CryptoAlien", "CANS") {}
 
-    function safeMint(address to, string memory uri) public {
+    function safeMint(address to, string memory uri) public payable {
         require(_tokenIdCounter.current() <= MAX_SUPPLY, "I'm sorry we reached the cap");
         require(maxPerUser[msg.sender] < 6, "Cannot mint more than 5 NFTS per user");
         if(msg.value != PRICE){
@@ -70,4 +70,5 @@ contract CryptoAlien is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
         if (!transferTx) {
             revert WithdrawTransfer();
         }
+}
 }
