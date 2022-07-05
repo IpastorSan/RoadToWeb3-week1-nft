@@ -1,14 +1,19 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts@4.7.0/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts@4.7.0/token/ERC721/extensions/ERC721Enumerable.sol";
-import "@openzeppelin/contracts@4.7.0/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts@4.7.0/utils/Counters.sol";
+import "openzeppelin-contracts/contracts/token/ERC721/ERC721.sol";
+import "openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "openzeppelin-contracts/contracts/utils/Counters.sol";
+import "openzeppelin-contracts/contracts/access/Ownable.sol";
 
-contract CryptoAlien is ERC721, ERC721Enumerable, ERC721URIStorage {
+error WithdrawTransfer();
+error MintPriceNotPaid();
+
+contract CryptoAlien is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
-    uint256 MAX_SUPPLY = 10000;
+    uint256 public constant MAX_SUPPLY = 10000;
+    uint256 public constant PRICE = 0.001 ether;
     mapping(address => uint256) maxPerUser;
 
     Counters.Counter private _tokenIdCounter;
@@ -18,6 +23,9 @@ contract CryptoAlien is ERC721, ERC721Enumerable, ERC721URIStorage {
     function safeMint(address to, string memory uri) public {
         require(_tokenIdCounter.current() <= MAX_SUPPLY, "I'm sorry we reached the cap");
         require(maxPerUser[msg.sender] < 6, "Cannot mint more than 5 NFTS per user");
+        if(msg.value != PRICE){
+            revert MintPriceNotPaid();
+        }
 
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
@@ -55,4 +63,11 @@ contract CryptoAlien is ERC721, ERC721Enumerable, ERC721URIStorage {
     {
         return super.supportsInterface(interfaceId);
     }
+
+    function withdrawPayments() external onlyOwner {
+        uint256 balance = address(this).balance;
+        (bool transferTx, ) = owner().call{value: balance}("");
+        if (!transferTx) {
+            revert WithdrawTransfer();
+        }
 }
