@@ -14,15 +14,22 @@ This project follows the course original code (directly taken from OZ´s Wizard)
 
 You will find some tests and deployment scripts.
 
-## Instructions
-Download the repo. 
+## Instructions.
 
-**Compile the project**
+1. 
+```bash
+git clone https://github.com/IpastorSan/RoadToWeb3-week1-nft.git
+cd RoadToWeb3-week1-nft
+forge install
+```
+2. Compile the project
 ```bash
 forge build
 ``` 
-**Run test suite**
+3. Run test suite
 ```bash
 forge test
 ```
+
+See the [Book of Foundry](https://book.getfoundry.sh/projects/working-on-an-existing-project.html) to learn more
 
