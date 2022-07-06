@@ -52,7 +52,8 @@ forge script script/nftDeploy.s.sol:NftDeploy --fork-url http://localhost:8545  
 ```
 
 **Deploy to Goerli**
-Loads .env variables 
+
+Load .env variables 
 in .env file->NO spaces between variable name and value, value with quotes. PRIVATE_KEY="blablabla"
 ```bash
 source .env
