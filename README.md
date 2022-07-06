@@ -8,6 +8,7 @@ During week 1, you get an intro on NFTs, build one using [Openzeppelin´s wizard
 To see the course you can either head over to [Alchemy´s Youtube Channel](https://www.youtube.com/watch?v=veBu03A6ptw&list=PLMj8NvODurfEYLsuiClgikZBGDfhwdcXF) or see the [Blog version](https://docs.alchemy.com/alchemy/road-to-web3/weekly-learning-challenges/1.-how-to-develop-an-nft-smart-contract-erc721-with-alchemy)
 
 Deployment address (Rinkeby) = 0xf91c1bfb2dbacbfbd39a171ef0cd3e3b47893099
+
 Deployment Address (Goerli) = 0x106eee8ba91043946c183cf87409f895e5083450
 
 ## This project
@@ -35,11 +36,12 @@ forge test
 See the [Book of Foundry](https://book.getfoundry.sh/projects/working-on-an-existing-project.html) to learn more
 
 **Run Locally**
-Opens Anvil local node
+
+Open Anvil local node
 ```bash
 anvil
 ```
-Loads .env variables 
+Load .env variables 
 in .env file->NO spaces between variable name and value, value with quotes. PRIVATE_KEY="blablabla"
 ```bash
 source .env
