@@ -18,7 +18,9 @@ contract CryptoAlien is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
 
     Counters.Counter private _tokenIdCounter;
 
-    constructor() ERC721("CryptoAlien", "CANS") {}
+    constructor() ERC721("CryptoAlien", "CANS") {
+        _tokenIdCounter.increment();
+    }
 
     function safeMint(address to, string memory uri) public payable {
         require(_tokenIdCounter.current() <= MAX_SUPPLY, "I'm sorry we reached the cap");
@@ -66,7 +68,7 @@ contract CryptoAlien is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
 
     function withdrawPayments() external onlyOwner {
         uint256 balance = address(this).balance;
-        (bool transferTx, ) = owner().call{value: balance}("");
+        (bool transferTx, ) = payable(owner()).call{value: balance}("");
         if (!transferTx) {
             revert WithdrawTransfer();
         }
